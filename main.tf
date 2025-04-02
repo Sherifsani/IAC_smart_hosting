@@ -45,6 +45,5 @@ resource "aws_s3_object" "website_files" {
   bucket       = aws_s3_bucket.sherif_web_bucket838.id
   key          = "index.html"
   source       = "uploads/index.html"
-  acl          = "public-read"
   content_type = "text/html"
 }
