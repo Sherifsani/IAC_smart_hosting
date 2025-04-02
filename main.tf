@@ -41,3 +41,11 @@ resource "aws_s3_bucket_public_access_block" "example" {
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
+resource "aws_s3_object" "website_files" {
+  bucket = aws_s3_bucket.web_bucket_1234.id
+  for_each = fileset(".", "*.html")
+  key = each.value
+  source = "uploads/${each.value}"
+  acl = "public-read"
+  content_type = lookup(var.mime_types, regex("\\.[^.]+$", each.value), "application/octet-stream")
+}
